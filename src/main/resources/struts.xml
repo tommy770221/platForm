@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE struts PUBLIC   
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+        "http://struts.apache.org/dtds/struts-2.3.dtd">  
+           
+<struts>  
+      <constant name="struts.multipart.saveDir" value="/Users/tommy/tmp"></constant>
+      <constant name="struts.i18n.encoding" value="UTF-8"/> 
+<!--       <constant name="struts.action.excludePattern" value="/j_spring_security_check"/>   -->
+<!--       <constant name="struts.action.excludePattern" value="/j_spring_security_check.*,.*\\.j_spring_security_check"/>   -->
+        <package name="user" extends="struts-default">    
+            <action name="saveUser" class="saveUserAction">  
+                <result name="success">/index.jsp</result>  
+                <result name="login">/page/saveError.jsp</result>  
+            </action>  
+            <action name="updateUser" class="updateUserAction">  
+                <result name="success">/page/updatesuccess.jsp</result>  
+                <result name="login">/index.jsp</result>  
+            </action>
+            <action name="deleteUser" class="deleteUserAction">  
+                <result name="success">/page/deleteSuccess.jsp</result>  
+                <result name="login">/index.jsp</result>  
+            </action>
+            <action name="listUser" class="listUserAction">  
+                <result name="success">/page/listSuccess.jsp</result>  
+                <result name="login">/index.jsp</result>  
+            </action>
+            <action name="findUser" class="findUserAction">  
+                <result name="success">/page/listUserSuccess.jsp</result>  
+                <result name="login">/index.jsp</result>  
+            </action>
+  
+      
+        
+            <action name="loginTest" class="loginAction">  
+                <result name="success">/indexTest.jsp</result>  
+                <result name="login">/indexTest.jsp</result>  
+                <result name="input">/indexTest.jsp</result> 
+            </action>
+            
+            
+            
+            <action name="FindPlace" class="FindPlaceAction">  
+                <result name="success">/FindPlaceByname.jsp</result>  
+                <result name="login">/index.jsp</result> 
+            </action>
+            <action name="ListPlace" class="ListPlaceAction" method="execute">  
+                <result name="success">/FindPlaceSuccess.jsp</result>  
+                <result name="login">/index.jsp</result> 
+            </action>
+     </package>  
+     
+      <package name="default" extends="struts-default" namespace="/">
+         
+        <action name="admin" class="loginActionSecurity" method="execute">
+            <result name="success">/page/manu.jsp</result>
+        </action>
+        <action name="login" class="loginAction" >  
+             <result name="success">/page/manu.jsp</result>  
+             <result name="login">/index.jsp</result>  
+        </action>  
+    </package>
+     
+     <package name="items" extends="struts-default" namespace="/page/items">    
+            <action name="saveItem" class="saveItemAction">  
+                <result name="success">/page/items/saveSuccess.jsp</result>  
+                <result name="login">/page/items/saveError.jsp</result>  
+            </action>  
+            <action name="updateItem" class="updateItemAction">  
+                <result name="success">/page/items/updateSuccess.jsp</result>  
+                <result name="login">/page/items/updateError.jsp</result>  
+            </action>
+            <action name="deleteItem" class="deleteItemAction">  
+                <result name="success">/page/items/deleteSuccess.jsp</result>  
+                <result name="login">/page/items/index.jsp</result>  
+            </action>
+            <action name="listItem" class="listItemAction">  
+                <result name="success">/page/items/listSuccess.jsp</result>  
+                <result name="login">/page/items/listError.jsp</result>  
+            </action>
+            <action name="findItem" class="findItemAction">  
+                <result name="success">/page/items/listItemSuccess.jsp</result>  
+                <result name="login">/page/items/listError.jsp</result>  
+            </action>
+      </package> 
+<!--         fileUploadDemo -->
+      <package name ="fileUploadDemo" extends ="struts-default"> 
+                <action name ="fileUpload" class ="FileUploadAction"> 
+                      <interceptor-ref name ="fileUploadStack" /> 
+                      <result name ="success">/ShowUpload.jsp </result> 
+                  </action> 
+       </package> 
+       
+<!--         DownLoadDemo -->
+         
+        <package name ="DownloadDemo" extends ="struts-default">     
+               <action name="download" class="DownloadAction">
+	                <result name="success" type="stream">
+	                       <param name="contentType">application/octet-stream</param>
+	                       <param name="inputName">fileInputStream</param>
+	                       <param name="contentDisposition">attachment;filename="123.txt"</param>
+	                       <param name="bufferSize">1024</param>
+	               </result>
+               </action>
+   </package>       
+</struts>  

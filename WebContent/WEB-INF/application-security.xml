@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <debug></debug>
+	<http auto-config='true' >
+        <csrf disabled="true"/>
+		<intercept-url pattern="/index.jsp" access="permitAll"/>
+		<intercept-url pattern="/bingMapTest/*" access="permitAll"/>
+		<intercept-url pattern="/components/*" access="permitAll"/>
+		<intercept-url pattern="/img/*" access="permitAll"/>
+		<intercept-url pattern="/img2/*" access="permitAll"/>
+		<intercept-url pattern="/bingMapTest/*" access="permitAll"/>
+		<intercept-url pattern="/page/**" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/UploadImages/**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/testAuth/**" access="hasRole('ROLE_ADMIN')"/>
+		<form-login login-page="/login.jsp" 
+		            username-parameter="user.id"
+			        password-parameter="user.password"
+			        authentication-success-handler-ref="loginSuccessHandler" 
+                    authentication-failure-url="/login.jsp?auth=fail"
+			        />
+		<logout logout-url="/j_spring_security_logout"/>
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select ID,PASSWORD, 1 from user where ID=?"
+				authorities-by-username-query="select ID, 'ROLE_USER' from user where ID =?  " />
+		</authentication-provider>
+	</authentication-manager>
+
+  
+
+
+</b:beans>

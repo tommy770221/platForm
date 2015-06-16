@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	                    http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd"
+	xmlns:tx="http://www.springframework.org/schema/tx" >
+
+     <tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- 配置數據源 -->
+	<!-- 一下分別配置了 數據庫驅動 數據庫路徑 用戶名 密碼等 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/user"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+
+	</bean>
+
+	<!-- 一下配置sessionFactory 這個東西曾經是在hibernate中定義的 如今交给了spring管理 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:mapping/**.hbm.xml</value>
+			</list>
+		</property>
+
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+   
+	<!-- 以下使一些用到的類 在使用類中均沒有實例化這個類，都交给了spring管理 -->
+
+	<!-- place DAO +Service -->
+
+	<bean id="placeDao" class="com.tommy.dao.impl.PlaceDAOImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="placeService" class="com.tommy.service.impl.PlaceServiceImpl"
+		scope="prototype">
+		<property name="placeDao" ref="placeDao"></property>
+	</bean>
+
+	<!-- pkList DAO +Service -->
+
+	<bean id="pkListDao" class="com.tommy.dao.impl.PkListDAOImpl"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="pkListService" class="com.tommy.service.impl.PkListServiceImpl"
+		scope="prototype">
+		<property name="pkListDao" ref="pkListDao"></property>
+	</bean>
+
+	<!-- items DAO +Service -->
+	<bean id="itemsDao" class="com.tommy.dao.impl.ItemsDAOImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="itemService" class="com.tommy.service.impl.ItemServiceImpl"
+		scope="prototype">
+		<property name="itemsDAO" ref="itemsDao"></property>
+	</bean>
+
+
+	<!-- User DAO +Service -->
+	<bean id="userDao" class="com.tommy.dao.impl.UserDAOImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userService" class="com.tommy.service.impl.UserServiceImpl"
+		scope="prototype">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<bean id="PkList" class="com.tommy.model.PkList" scope="prototype">
+	</bean>
+
+
+
+
+	<!-- user action -->
+	<bean id="saveUserAction" class="com.tommy.action.SaveUserAction"
+		scope="prototype">
+		<property name="service" ref="userService"></property>
+	</bean>
+	<bean id="updateUserAction" class="com.tommy.action.UpdateUserAction"
+		scope="prototype">
+		<property name="service" ref="userService"></property>
+	</bean>
+	<bean id="deleteUserAction" class="com.tommy.action.DeleteUserAction"
+		scope="prototype">
+		<property name="service" ref="userService"></property>
+	</bean>
+	<bean id="listUserAction" class="com.tommy.action.ListUserAction"
+		scope="prototype">
+		<property name="service" ref="userService"></property>
+	</bean>
+	<bean id="findUserAction" class="com.tommy.action.FindUserAction"
+		scope="prototype">
+		<property name="service" ref="userService"></property>
+	</bean>
+	<bean id="loginAction" class="com.tommy.action.LoginAction" scope="prototype">
+		<property name="service" ref="userService"></property>
+	</bean>
+	<bean id="loginActionSecurity" class="com.tommy.action.LoginActionSecurity" scope="prototype">
+		
+	</bean>
+
+	<!-- place action -->
+
+	<bean id="FindPlaceAction" class="com.tommy.action.FindPlaceAction"
+		scope="prototype">
+		<property name="service" ref="placeService"></property>
+	</bean>
+	<bean id="ListPlaceAction" class="com.tommy.action.ListPlaceAction"
+		scope="prototype">
+		<property name="service" ref="placeService"></property>
+	</bean>
+
+	<!-- Items action -->
+
+	<bean id="listItemAction" class="com.tommy.item.action.ListItemAction"
+		scope="prototype">
+		<property name="itemService" ref="itemService"></property>
+	</bean>
+
+	<bean id="deleteItemAction" class="com.tommy.item.action.DeleteItemAction"
+		scope="prototype">
+		<property name="itemService" ref="itemService"></property>
+	</bean>
+
+	<bean id="updateItemAction" class="com.tommy.item.action.UpdateItemAction"
+		scope="prototype">
+		<property name="itemService" ref="itemService"></property>
+	</bean>
+
+	<bean id="saveItemAction" class="com.tommy.item.action.SaveItemAction"
+		scope="prototype">
+		<property name="itemService" ref="itemService"></property>
+	</bean>
+
+	<bean id="findItemAction" class="com.tommy.item.action.FindItemAction"
+		scope="prototype">
+		<property name="itemService" ref="itemService"></property>
+	</bean>
+
+
+	<!-- fileUpload -->
+	<bean id="FileUploadAction" class="com.tommy.action.FileUploadAction"
+		scope="prototype">
+	</bean>
+
+	<!-- download -->
+	<bean id="DownloadAction" class="com.tommy.action.DownloadAction"
+		scope="prototype">
+	</bean>
+
+	<!-- Spring Security -->
+	<bean id="loginSuccessHandler" class="com.tommy.action.loginhandle.LoginSuccessHandler">
+    <property name="defaultTargetUrl" value="/page/manu.jsp"/>
+    <property name="mailService" ref="mailService" />
+<!--     <property name="alwaysUseDefaultTargetUrl" value="true"/> -->
+    </bean>
+    
+    <!-- Spring Mail -->
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="tommy770221test@gmail.com" />
+		<property name="password" value="henry1021" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="mailService" class="com.tommy.service.impl.MailServiceImpl">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+</beans>

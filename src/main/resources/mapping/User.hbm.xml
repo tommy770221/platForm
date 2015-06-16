@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.tommy.model.User" table="user" catalog="user">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="username" type="string">
+            <column name="USERNAME" />
+        </property>
+        <property name="password" type="string">
+            <column name="PASSWORD" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="45" />
+        </property>
+        <property name="userId" type="string">
+            <column name="userId" length="45" unique="true"/>
+        </property>
+        <property name="post_no" type="java.lang.Integer">
+            <column name="post_no" />
+        </property>
+        <property name="age" type="java.lang.Integer">
+            <column name="age" />
+        </property>
+    </class>
+</hibernate-mapping>

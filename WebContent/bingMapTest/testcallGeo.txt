@@ -1,0 +1,2 @@
+﻿http://dev.virtualearth.net/REST/v1/Locations?query=%E5%8F%B0%E5%8C%97%E5%B8%82%E6%8D%B7%E9%81%8B%E5%B8%82%E6%94%BF%E5%BA%9C%E7%AB%99&output=json&jsonp=GeocodeCallback&key=AgE_keFlqr_70uAWHHEzvIdXuRctQ3dsmdVtVS-voP4gLu17fTYYW2axEN1ytNFG
+

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014/9/7 ?????? 10:00:20 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.tommy.model.Items" table="items" catalog="user">
+        <id name="itemNo" type="int">
+            <column name="item_no" />
+            <generator class="assigned" />
+        </id>
+        <property name="itemName" type="string">
+            <column name="item_name" />
+        </property>
+        <property name="price" type="java.lang.Integer">
+            <column name="price" />
+        </property>
+        <property name="cost" type="java.lang.Integer">
+            <column name="cost" />
+        </property>
+    </class>
+</hibernate-mapping>
