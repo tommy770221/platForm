@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	                    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 	                    http://www.springframework.org/schema/tx
@@ -9,6 +10,7 @@
                         http://www.springframework.org/schema/aop/spring-aop.xsd"
 	xmlns:tx="http://www.springframework.org/schema/tx" >
 
+    
      <tx:annotation-driven transaction-manager="transactionManager"/>
 	<!-- 配置數據源 -->
 	<!-- 一下分別配置了 數據庫驅動 數據庫路徑 用戶名 密碼等 -->
@@ -47,7 +49,9 @@
 	</bean>
    
 	<!-- 以下使一些用到的類 在使用類中均沒有實例化這個類，都交给了spring管理 -->
-
+    <bean id="userDetailsService" class="com.tommy.service.impl.UserDetailServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+    </bean>
 	<!-- place DAO +Service -->
 
 	<bean id="placeDao" class="com.tommy.dao.impl.PlaceDAOImpl" scope="prototype">

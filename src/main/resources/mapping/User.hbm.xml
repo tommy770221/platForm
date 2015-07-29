@@ -31,5 +31,8 @@
         <property name="age" type="java.lang.Integer">
             <column name="age" />
         </property>
+        <property name="enabled" type="boolean">
+            <column name="enabled" />
+        </property>
     </class>
 </hibernate-mapping>

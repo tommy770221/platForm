@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
@@ -32,8 +32,26 @@
 				authorities-by-username-query="select ID, 'ROLE_USER' from user where ID =?  " />
 		</authentication-provider>
 	</authentication-manager>
+	
+<!-- 	 <beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"> -->
+<!--         <beans:property name="userDetailsService" ref="userDetailsService"/> -->
+<!--     </beans:bean> -->
+     
+     
+<!--     <beans:bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager"> -->
+<!--         <beans:property name="providers"> -->
+<!--             <beans:list> -->
+<!--                 <beans:ref bean="daoAuthenticationProvider" /> -->
+<!--             </beans:list> -->
+<!--         </beans:property> -->
+<!--     </beans:bean> -->
+     
+<!--     <authentication-manager erase-credentials="false"> -->
+<!--         <authentication-provider user-service-ref="userDetailsService"> -->
+<!--         </authentication-provider> -->
+<!--     </authentication-manager> -->
 
   
 
 
-</b:beans>
+</beans:beans>
